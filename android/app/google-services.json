@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "427886693193",
+    "project_id": "social-app-a6b82",
+    "storage_bucket": "social-app-a6b82.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427886693193:android:ae5b69d5d8e5f29f696898",
+        "android_client_info": {
+          "package_name": "com.example.music_player_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427886693193-6a9e6p9btfsj3b7ggnfbpm2k9sp70pq9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMrieJIhvAQVtYGrKFLYRQovPyF1zn7Ng"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "427886693193-4m6orep5pma7of83h76sm3iaijlp49a5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427886693193:android:1b4d19333e81992e696898",
+        "android_client_info": {
+          "package_name": "com.sandeshkolte.socialapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427886693193-6a9e6p9btfsj3b7ggnfbpm2k9sp70pq9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMrieJIhvAQVtYGrKFLYRQovPyF1zn7Ng"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "427886693193-4m6orep5pma7of83h76sm3iaijlp49a5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
