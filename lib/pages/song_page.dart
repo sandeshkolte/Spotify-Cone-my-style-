@@ -70,9 +70,17 @@ class _SongPageState extends State<SongPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(12),
-                          child: Image.asset(
-                            currentSong.albumImagePath,
-                            scale: 2.2,
+                          child: Container(
+                            height: 280,
+                            width: 280,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        "assets/images/default-image.jpg"))),
+                            child: Image.network(
+                              currentSong.albumImagePath,
+                              // scale: 2.2,
+                            ),
                           )),
                     ),
                     Padding(

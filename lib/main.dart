@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: Provider.of<ThemeProvider>(context).themeData,
       debugShowCheckedModeBanner: false,
-      home: const Music(),
+      home: const PlayListPage(),
     );
   }
 }
