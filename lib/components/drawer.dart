@@ -25,6 +25,14 @@ class MyDrawer extends StatelessWidget {
               onTap: () => Navigator.pop(context),
             ),
           ),
+             Padding(
+            padding: const EdgeInsets.only(left: 25, top: 25),
+            child: ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text("C R E A T E PLAYLIST"),
+              onTap: () => Navigator.pop(context),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(left: 25, top: 0),
             child: ListTile(

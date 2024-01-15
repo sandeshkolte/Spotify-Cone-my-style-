@@ -37,15 +37,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   audioplayers: ^5.2.1
   provider:
-  marquee:
   firebase_core: ^2.24.2
   firebase_storage: ^11.6.0
   cloud_firestore:
-  intl:
   file_picker: ^6.1.1
   image_picker:
-  flutter_audio_output:
-  logger: ^2.0.2+1
   
 
 dev_dependencies:
