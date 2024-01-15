@@ -125,6 +125,9 @@ class PlayListProvider extends ChangeNotifier {
     _playList =
         querySnapshot.docs.map((doc) => Song.fromFirestore(doc)).toList();
 
+    debugPrint(
+        "Fetched ${_playList.length} songs from Firestore."); // Add this line
+
     notifyListeners();
   }
 

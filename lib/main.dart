@@ -19,8 +19,10 @@ void main() async {
           storageBucket: "social-app-a6b82.appspot.com"));
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (context) => ThemeProvider()),
-      ChangeNotifierProvider(create: (context) => PlayListProvider())
+      ChangeNotifierProvider(create: (_) => ThemeProvider()),
+      ChangeNotifierProvider(
+        create: (_) => PlayListProvider(),
+      )
     ],
     child: const MyApp(),
   ));

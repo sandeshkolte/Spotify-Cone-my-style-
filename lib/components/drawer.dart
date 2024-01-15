@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music_player_app/pages/create_music.dart';
 
 import '../pages/setting_page.dart';
 
@@ -25,13 +26,17 @@ class MyDrawer extends StatelessWidget {
               onTap: () => Navigator.pop(context),
             ),
           ),
-             Padding(
-            padding: const EdgeInsets.only(left: 25, top: 25),
+          Padding(
+            padding: const EdgeInsets.only(left: 25, top: 0),
             child: ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text("C R E A T E PLAYLIST"),
-              onTap: () => Navigator.pop(context),
-            ),
+                leading: const Icon(Icons.playlist_add_rounded),
+                title: const Text("C R E A T E"),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CreateMusic()));
+                }),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 25, top: 0),
@@ -39,8 +44,10 @@ class MyDrawer extends StatelessWidget {
               leading: const Icon(Icons.settings),
               title: const Text("S E T T I N G S"),
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const SettingsPage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SettingsPage()));
               },
             ),
           )

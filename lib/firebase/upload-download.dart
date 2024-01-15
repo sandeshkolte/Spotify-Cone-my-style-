@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -17,18 +16,20 @@ class UploadDownload {
 
   PlatformFile? pickedFile;
   File? selectedFile;
+  UploadTask? uploadImageTask;
+  UploadTask? uploadAudioTask;
 
   Future selectFile() async {
     try {
       isAudioSelected.value = false;
       final result = await FilePicker.platform.pickFiles(type: FileType.audio);
-
-      pickedFile = result!.files.first;
+      if (result == null) return;
+      pickedFile = result.files.first;
+      selectedFile = File(pickedFile!.path!);
+      debugPrint("FILE SELECTED: $pickedFile");
     } catch (e) {
       debugPrint(e.toString());
     } finally {
-      selectedFile = File(pickedFile!.path!);
-      debugPrint("FILE SELECTED: $pickedFile");
       isAudioSelected.value = true;
     }
   }
@@ -39,10 +40,11 @@ class UploadDownload {
       final Reference audioRef = FirebaseStorage.instance.ref().child("audio");
       var timeKey = DateTime.now();
 
-      final UploadTask uploadTask =
-          audioRef.child("$timeKey.mp3").putFile(selectedFile!);
-      var url =
-          await (await uploadTask.whenComplete(() {})).ref.getDownloadURL();
+      uploadAudioTask = audioRef.child("$timeKey.mp3").putFile(selectedFile!);
+
+      var url = await (await uploadAudioTask!.whenComplete(() {}))
+          .ref
+          .getDownloadURL();
       audioUrl = url.toString();
       debugPrint("AUDIO: $audioUrl");
     } catch (e) {
@@ -62,7 +64,6 @@ class UploadDownload {
       var pickedImage =
           await ImagePicker().pickImage(source: ImageSource.gallery);
       if (pickedImage == null) return;
-
       selectedImage = File(pickedImage.path);
       debugPrint("IMAGE SELECTED :$selectedImage");
     } catch (e) {
@@ -79,11 +80,12 @@ class UploadDownload {
           FirebaseStorage.instance.ref().child("images");
       var timeKey = DateTime.now();
 
-      final UploadTask uploadTask =
+      uploadImageTask =
           postImageRef.child("$timeKey.jpg").putFile(selectedImage!);
 
-      var ImageUrl =
-          await (await uploadTask.whenComplete(() {})).ref.getDownloadURL();
+      var ImageUrl = await (await uploadImageTask!.whenComplete(() {}))
+          .ref
+          .getDownloadURL();
 
       imageUrl = ImageUrl.toString();
       debugPrint("IMAGE: $imageUrl");
@@ -121,4 +123,34 @@ class UploadDownload {
       debugPrint("UPLOAD TO DATABASE SUCCESS");
     }
   }
+
+  Widget buildProgress() => StreamBuilder<TaskSnapshot>(
+      stream: uploadAudioTask?.snapshotEvents,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final data = snapshot.data;
+          double progress = data!.bytesTransferred / data.totalBytes;
+
+          return SizedBox(
+              height: 50,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  LinearProgressIndicator(
+                    value: progress,
+                    color: Colors.blueGrey,
+                    backgroundColor: Colors.grey,
+                  ),
+                  Center(
+                    child: Text(
+                      '${(100 * progress).roundToDouble()}%',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  )
+                ],
+              ));
+        } else {
+          return const SizedBox();
+        }
+      });
 }

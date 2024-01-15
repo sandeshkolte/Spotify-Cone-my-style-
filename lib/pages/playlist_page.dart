@@ -107,8 +107,7 @@ class PlayListPage extends StatefulWidget {
 }
 
 class _PlayListPageState extends State<PlayListPage> {
-  late final PlayListProvider
-      playListProvider; // Use the actual type, not dynamic
+  late final PlayListProvider playListProvider;
 
   @override
   void initState() {
@@ -123,75 +122,91 @@ class _PlayListPageState extends State<PlayListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(
-        title: const Text("P L A Y L I S T"),
-        centerTitle: true,
-      ),
-      drawer: const MyDrawer(),
-      body: Consumer<PlayListProvider>(builder: (context, value, child) {
-        final List<Song> playList = value.playList;
-        // final Song currentSong = playList[value.currentSongIndex ?? 0];
-        final currentSongIndex = value.currentSongIndex ?? 0;
-        final Song currentSong = playList.isNotEmpty
-            ? playList[currentSongIndex]
-            : Song(
-                songName: "Rela rela",
-                artistName: "Gondi",
-                albumImagePath: "assets/images/image1.png",
-                audioPath: "audio/Rela_rela.mp3");
+        backgroundColor: Theme.of(context).colorScheme.background,
+        appBar: AppBar(
+          title: const Text("P L A Y L I S T"),
+          centerTitle: true,
+        ),
+        drawer: const MyDrawer(),
+        body: Consumer<PlayListProvider>(builder: (context, value, child) {
+          // debugPrint("CONSUMER REBUILT");
 
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: playList.length,
-                itemBuilder: (context, index) {
-                  final Song song = playList[index];
+          final List<Song> playList = value.playList;
+          // final Song currentSong = playList[value.currentSongIndex ?? 0];
+          final currentSongIndex = value.currentSongIndex ?? 0;
+          final Song currentSong = playList.isNotEmpty
+              ? playList[currentSongIndex]
+              : Song(
+                  songName: "Rela rela",
+                  artistName: "Gondi",
+                  albumImagePath: "assets/images/image1.png",
+                  audioPath: "audio/Rela_rela.mp3");
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: playList.length,
+                  itemBuilder: (context, index) {
+                    final Song song = playList[index];
 
-                  return ListTile(
-                    selected: currentSongIndex == index,
-                    selectedTileColor: Theme.of(context).colorScheme.secondary,
-                    selectedColor: Colors.green,
-                    title: Text(song.songName),
-                    subtitle: Text(song.artistName),
-                    leading: Image.network(song.albumImagePath),
-                    onTap: () => gotoSong(index),
-                  );
-                },
+                    return ListTile(
+                      selected: currentSongIndex == index,
+                      selectedTileColor:
+                          Theme.of(context).colorScheme.secondary,
+                      selectedColor: Colors.green,
+                      title: Text(song.songName),
+                      subtitle: Text(song.artistName),
+                      leading: Container(
+                          height: 55,
+                          width: 55,
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      "assets/images/default-image.jpg"))),
+                          child: Image.network(song.albumImagePath)),
+                      onTap: () => gotoSong(index),
+                    );
+                  },
+                ),
               ),
-            ),
-            playList.isNotEmpty
-                ? Container(
-                    padding: const EdgeInsets.symmetric(vertical: 2),
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 20),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                    child: ListTile(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SongPage()),
-                        );
-                      },
-                      leading: Image.network(currentSong.albumImagePath),
-                      title: Text(currentSong.songName),
-                      subtitle: Text(currentSong.artistName),
-                      trailing: IconButton(
-                        icon: Icon(
-                            value.isPlaying ? Icons.pause : Icons.play_arrow),
-                        onPressed: value.pauseOrResume,
+              playList.isNotEmpty
+                  ? Container(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
-                    ),
-                  )
-                : Text("No value"),
-          ],
-        );
-      }),
-    );
+                      child: ListTile(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SongPage()),
+                          );
+                        },
+                        leading: Container(
+                            height: 55,
+                            width: 55,
+                            decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        "assets/images/default-image.jpg"))),
+                            child: Image.network(currentSong.albumImagePath)),
+                        title: Text(currentSong.songName),
+                        subtitle: Text(currentSong.artistName),
+                        trailing: IconButton(
+                          icon: Icon(
+                              value.isPlaying ? Icons.pause : Icons.play_arrow),
+                          onPressed: value.pauseOrResume,
+                        ),
+                      ),
+                    )
+                  : const Text("No value"),
+            ],
+          );
+        }));
   }
 }

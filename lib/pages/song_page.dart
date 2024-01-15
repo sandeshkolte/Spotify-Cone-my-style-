@@ -73,7 +73,7 @@ class _SongPageState extends State<SongPage> {
                           child: Container(
                             height: 280,
                             width: 280,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(
                                         "assets/images/default-image.jpg"))),
